@@ -1,14 +1,8 @@
-import discord
-import random
-import youtube_dl
-import os
-import time
-import colorama
-import random
+import discord, random, youtube_dl, os, time, colorama, requests
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from discord import File, User
-import requests
 from discord.ext import commands, tasks
+from discord.utils import get
 
 client = commands.Bot(command_prefix = '$')
 
@@ -16,6 +10,20 @@ players = {}
 
 os.system('cls')
 client.remove_command('help')
+
+
+@client.command(name='membercount')
+async def membercount(ctx):
+    bot_count = 0
+    for member in ctx.guild.members:
+      if member.bot:
+        bot_count += 1
+    embed = discord.Embed(title = "User count" , description = "", color = discord.Color.purple())
+    embed.add_field(name='Members count  ', value=f' Users = {ctx.guild.member_count}',inline=False)
+    embed.add_field(name='Bot count  ', value=f' Bots = {bot_count} ',inline=False)
+    await ctx.send(embed=embed)
+
+
 
 @client.event
 async def on_ready():
@@ -25,6 +33,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+
 
 images = [
     'https://i.imgur.com/uT6wTzs.jpeg']
@@ -43,7 +52,7 @@ async def bomb(ctx, amount=5):
 @commands.has_permissions(kick_members=True)
 async def kick(context, member: discord.Member):
     await member.kick()
-    await context.send('User ' + member.display_name + ' has been kicked.')
+    await context.send('User " ' + member.display_name + ' " has been kicked.')
 
 
 @client.command()
@@ -132,6 +141,7 @@ async def cmd(ctx):
     embed.add_field(name='cmd', value='List all commands',inline=False)
     embed.add_field(name='8ball', value='Test your fate',inline=False)
     embed.add_field(name='whois', value='Get info on a person',inline=False)
+    embed.add_field(name='membercount', value='Shows how many members are in the server.',inline=False)
     embed.add_field(name='Invite', value='Invite the bot to your server!',inline=False)
     embed.add_field(name='kick', value='Remove someone from the server -mods',inline=False)
     embed.add_field(name='bomb', value='Clear chat only for -mods',inline=False)
@@ -143,4 +153,5 @@ async def cmd(ctx):
 
 
 
-client.run('ODE4MzQ0NjE3MzIxMjk5OTc4.YEWs0A.FdFNosN6_CuIk9EFfteOC3WdccE')
+client.run('token')
+
