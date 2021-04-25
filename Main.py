@@ -179,11 +179,6 @@ async def cmd(ctx):
     embed.add_field(name='ban',
                     value='Ban someone from the server -Admin',
                     inline=False)
-    embed.add_field(
-        name='Donate',
-        value=
-        'You do not need to donate but if you want to support me here is my paypal! paypal.me/badgreenx',
-        inline=False)
     embed.set_footer(text='Made by Invisiblebreezy5234')
     await ctx.message.delete()
     await ctx.send(embed=embed)
